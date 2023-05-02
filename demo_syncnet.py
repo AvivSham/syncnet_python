@@ -36,7 +36,7 @@ def run_eval(opt, filename, device):
 
     conf, dist = s.evaluate(opt, videofile=filename)
 
-    return dict(vid_name=opt.videofile, confidence=conf, distance=dist)
+    return dict(vid_name=f"{filename.parent.stem}_{filename.stem}", confidence=conf, distance=dist)
 
 
 if __name__ == '__main__':
