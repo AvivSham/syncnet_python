@@ -28,7 +28,7 @@ def get_parser():
 
 # ==================== RUN EVALUATION ====================
 
-def run_eval(opt, filename, device):
+def run_eval(opt, filename, device=0):
     s = SyncNetInstance()
     s = s.to(device)
 
@@ -42,15 +42,12 @@ def run_eval(opt, filename, device):
 
 if __name__ == '__main__':
     args = get_parser()
-    torch.multiprocessing.set_start_method("spawn")
     p = Path(args.data_path)
-    vid_files = list(p.rglob("*.mp4"))
-    num_gpus = torch.cuda.device_count()
-    commands = [(args, f, i % num_gpus) for i, f in enumerate(vid_files)]
+    vid_files = p.rglob("*.mp4")
 
     results = defaultdict(list)
-    with torch.multiprocessing.Pool(torch.cuda.device_count()) as pool:
-        r = pool.starmap(run_eval, commands)
+    for f in vid_files:
+        r = run_eval(args, f)
         results["filename"].append(r[0])
         results["confidence"].append(r[1])
         results["distance"].append(r[2])
