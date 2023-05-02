@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import pickle
 import time, pdb, argparse, subprocess
 from pathlib import Path
 
@@ -49,3 +50,6 @@ if __name__ == '__main__':
     results = dict()
     with torch.multiprocessing.Pool(torch.cuda.device_count()) as pool:
         results.update(pool.starmap(run_eval, commands))
+
+    with open("/dsi/gannot-lab/datasets2/lrs3_vid_subset/results.pkl", "wb") as file:
+        pickle.dump(results, file)
