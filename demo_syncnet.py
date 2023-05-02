@@ -27,14 +27,14 @@ def get_parser():
 
 # ==================== RUN EVALUATION ====================
 
-def run_eval(opt, device):
+def run_eval(opt, filename, device):
     s = SyncNetInstance()
     s = s.to(device)
 
     s.loadParameters(opt.initial_model)
     # print("Model %s loaded."%opt.initial_model);
 
-    conf, dist = s.evaluate(opt, videofile=opt.videofile)
+    conf, dist = s.evaluate(opt, videofile=filename)
 
     return dict(vid_name=opt.videofile, confidence=conf, distance=dist)
 
