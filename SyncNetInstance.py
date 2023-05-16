@@ -82,7 +82,9 @@ class SyncNetInstance(torch.nn.Module):
         current_height, current_width, channels, frames = im.shape
         pad_height = max(256 - current_height, 0)
         pad_width = max(256 - current_width, 0)
-        im = np.pad(im, ((0, pad_height), (0, pad_width), (0, 0), (0, 0)), mode='constant')
+        im = np.pad(
+            im, ((0, pad_height), (0, pad_width), (0, 0), (0, 0)), mode="constant"
+        )
         im = numpy.expand_dims(im, axis=0)
         im = numpy.transpose(im, (0, 3, 4, 1, 2))
 
