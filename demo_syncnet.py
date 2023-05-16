@@ -56,5 +56,5 @@ if __name__ == "__main__":
         results["confidence"].append(r[1])
         results["distance"].append(r[2])
 
-    with open("/dsi/gannot-lab/datasets2/lrs3_vid_subset/results.pkl", "wb") as file:
+    with open(f"data/{p.stem}_results.pkl", "wb") as file:
         pickle.dump(results, file)
