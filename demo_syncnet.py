@@ -50,11 +50,17 @@ if __name__ == "__main__":
     vid_files = p.rglob("*.mp4")
 
     results = defaultdict(list)
+    de_vids = 0
     for f in vid_files:
-        r = run_eval(args, f)
+        try:
+            r = run_eval(args, f)
+        except:
+            de_vids += 1
+            r = ["defect_video", sum(results["confidence"]) / len(results["confidence"]), sum(results["distance"]) / len(results["distance"])]
         results["filename"].append(r[0])
         results["confidence"].append(r[1])
         results["distance"].append(r[2])
 
     with open(f"data/{p.stem}_results.pkl", "wb") as file:
         pickle.dump(results, file)
+    print(10 * "#", "\n", f"NUMBER OF DAMAGED VIDS: {de_vids}\n", 10 * "#")

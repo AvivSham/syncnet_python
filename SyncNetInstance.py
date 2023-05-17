@@ -79,9 +79,10 @@ class SyncNetInstance(torch.nn.Module):
         for fname in flist:
             images.append(cv2.imread(fname))
         im = numpy.stack(images, axis=3)
+        print(4*"\n", 10 * "#", im.shape, 10 * "#", 4*"\n")
         current_height, current_width, channels, frames = im.shape
-        pad_height = max(256 - current_height, 0)
-        pad_width = max(256 - current_width, 0)
+        pad_height = max(224 - current_height, 0)
+        pad_width = max(224 - current_width, 0)
         im = np.pad(
             im, ((0, pad_height), (0, pad_width), (0, 0), (0, 0)), mode="constant"
         )
